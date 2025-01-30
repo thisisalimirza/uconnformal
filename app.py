@@ -23,6 +23,11 @@ login_manager.login_view = 'login'
 # Configuration
 MAX_CAPACITY = 200  # Maximum number of attendees (including plus ones)
 
+# Template context processor
+@app.context_processor
+def inject_year():
+    return {'now': datetime.utcnow()}
+
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)

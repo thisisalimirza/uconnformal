@@ -3,22 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medical School Formal - {% block title %}{% endblock %}</title>
+    <title>UConn Medical School Formal - {% block title %}{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #4f46e5;
-            --primary-dark: #4338ca;
-            --secondary-color: #6366f1;
-            --success-color: #22c55e;
-            --warning-color: #f59e0b;
-            --danger-color: #ef4444;
-            --background-color: #f9fafb;
-            --card-background: #ffffff;
-            --text-primary: #111827;
-            --text-secondary: #6b7280;
+            /* Primary Colors */
+            --primary-color: #000E2F;      /* UConn Navy */
+            --primary-dark: #000720;       /* Darker Navy */
+            --primary-light: #1a2847;      /* Lighter Navy for hover states */
+            
+            /* Secondary Colors */
+            --secondary-color: #4A4A4A;    /* Darker gray for better contrast */
+            --secondary-light: #666666;    /* UConn Gray */
+            
+            /* Accent Colors */
+            --accent-color: #E4002B;       /* UConn Red */
+            --accent-dark: #B30022;        /* Darker Red for hover states */
+            --accent-light: #FF1744;       /* Lighter Red for highlights */
+            
+            /* UI Colors */
+            --success-color: #0A8754;      /* Darker success for better contrast */
+            --warning-color: #CC9900;      /* Darker warning for better contrast */
+            --danger-color: #E4002B;       /* UConn Red */
+            
+            /* Background Colors */
+            --background-color: #F5F7FA;   /* Light gray background */
+            --card-background: #FFFFFF;
+            
+            /* Text Colors */
+            --text-primary: #000E2F;       /* Navy for primary text */
+            --text-secondary: #4A4A4A;     /* Dark gray for secondary text */
+            --text-light: #666666;         /* Light gray for tertiary text */
+            --text-white: #FFFFFF;         /* White text */
         }
 
         body {
@@ -26,185 +44,272 @@
             display: flex;
             flex-direction: column;
             background-color: var(--background-color);
-            font-family: 'Inter', sans-serif;
+            font-family: 'Open Sans', sans-serif;
             color: var(--text-primary);
+            line-height: 1.6;
         }
 
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .display-4 {
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        /* Navbar Styles */
         .navbar {
-            background-color: var(--card-background);
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            background-color: var(--primary-color);
             padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .navbar-brand {
             font-weight: 700;
-            color: var(--primary-color) !important;
+            color: var(--text-white) !important;
             font-size: 1.5rem;
+            letter-spacing: 0.5px;
         }
 
         .nav-link {
-            color: var(--text-primary) !important;
-            font-weight: 500;
+            color: var(--text-white) !important;
+            font-weight: 600;
             padding: 0.5rem 1rem;
             border-radius: 0.5rem;
             transition: all 0.2s ease;
+            margin: 0 0.25rem;
         }
 
         .nav-link:hover {
-            background-color: var(--background-color);
-            color: var(--primary-color) !important;
+            background-color: var(--primary-light);
+            transform: translateY(-1px);
         }
 
         .nav-link.active {
-            background-color: var(--primary-color);
-            color: white !important;
+            background-color: var(--accent-color);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        .main-content {
-            flex: 1;
-            padding: 2rem 0;
-        }
-
+        /* Card Styles */
         .card {
             border: none;
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
+            background-color: var(--card-background);
+            margin-bottom: 1.5rem;
         }
 
         .card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
         }
 
+        .card-title {
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .card-text {
+            color: var(--text-secondary);
+        }
+
+        /* Button Styles */
         .btn {
-            padding: 0.5rem 1.5rem;
+            padding: 0.75rem 1.5rem;
             border-radius: 0.5rem;
-            font-weight: 500;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .btn-primary {
             background-color: var(--primary-color);
             border-color: var(--primary-color);
+            color: var(--text-white);
         }
 
         .btn-primary:hover {
-            background-color: var(--primary-dark);
-            border-color: var(--primary-dark);
+            background-color: var(--primary-light);
+            border-color: var(--primary-light);
             transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
         }
 
-        .btn-outline-primary {
-            color: var(--primary-color);
-            border-color: var(--primary-color);
+        .btn-accent {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: var(--text-white);
         }
 
-        .btn-outline-primary:hover {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
+        .btn-accent:hover {
+            background-color: var(--accent-dark);
+            border-color: var(--accent-dark);
             transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
         }
 
-        .flash-messages {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-            min-width: 300px;
-            max-width: 400px;
-        }
-
-        .alert {
-            border: none;
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            animation: slideIn 0.3s ease-out;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
+        /* Form Styles */
         .form-control {
             border-radius: 0.5rem;
             padding: 0.75rem 1rem;
-            border: 1px solid #e5e7eb;
+            border: 2px solid #E5E9F0;
             transition: all 0.2s ease;
+            background-color: var(--card-background);
         }
 
         .form-control:focus {
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+            box-shadow: 0 0 0 3px rgba(0, 14, 47, 0.1);
         }
 
         .form-label {
-            font-weight: 500;
+            font-weight: 600;
             color: var(--text-secondary);
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
         }
 
-        .badge {
-            padding: 0.5em 1em;
-            border-radius: 9999px;
-            font-weight: 500;
-        }
-
+        /* Table Styles */
         .table {
-            border-radius: 1rem;
+            border-radius: 0.75rem;
             overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
 
         .table th {
-            background-color: #f8fafc;
+            background-color: var(--primary-color);
+            color: var(--text-white);
             font-weight: 600;
             text-transform: uppercase;
-            font-size: 0.75rem;
+            font-size: 0.875rem;
             letter-spacing: 0.05em;
-            color: var(--text-secondary);
+            padding: 1rem;
+            border-bottom: none;
         }
 
         .table td {
             vertical-align: middle;
+            padding: 1rem;
+            color: var(--text-secondary);
+            border-color: #E5E9F0;
         }
 
-        /* Dark mode support */
+        /* Badge Styles */
+        .badge {
+            padding: 0.5em 1em;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Alert Styles */
+        .alert {
+            border: none;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            padding: 1rem 1.5rem;
+        }
+
+        .alert-success {
+            background-color: #E3F9EE;
+            color: var(--success-color);
+        }
+
+        .alert-warning {
+            background-color: #FFF8E6;
+            color: var(--warning-color);
+        }
+
+        .alert-danger {
+            background-color: #FFE8EC;
+            color: var(--danger-color);
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--text-white);
+            padding: 2rem 0;
+            margin-top: auto;
+        }
+
+        footer small {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        /* UConn Specific Styles */
+        .uconn-accent-border {
+            border-bottom: 4px solid var(--accent-color);
+        }
+
+        .uconn-section-title {
+            color: var(--primary-color);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .uconn-section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background-color: var(--accent-color);
+        }
+
+        /* Dark Mode Support */
         @media (prefers-color-scheme: dark) {
             :root {
-                --background-color: #1f2937;
-                --card-background: #111827;
-                --text-primary: #f9fafb;
-                --text-secondary: #9ca3af;
-            }
-
-            .table th {
-                background-color: #374151;
+                --background-color: #1a1a2e;
+                --card-background: #000E2F;
+                --text-primary: #FFFFFF;
+                --text-secondary: #E5E9F0;
+                --text-light: #A0AEC0;
             }
 
             .form-control {
-                background-color: #374151;
-                border-color: #4b5563;
+                background-color: rgba(255, 255, 255, 0.05);
+                border-color: rgba(255, 255, 255, 0.1);
                 color: var(--text-primary);
             }
 
             .form-control:focus {
-                background-color: #374151;
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+
+            .table {
+                color: var(--text-primary);
+            }
+
+            .table td {
+                border-color: rgba(255, 255, 255, 0.1);
             }
         }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg uconn-accent-border">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="{{ url_for('index') }}">
                 <i class="fas fa-glass-cheers me-2"></i>
-                Medical School Formal
+                UConn Medical School Formal
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -269,6 +374,12 @@
             {% block content %}{% endblock %}
         </div>
     </div>
+
+    <footer class="py-4 bg-primary text-white mt-auto">
+        <div class="container text-center">
+            <small>© {{ now.year }} UConn School of Medicine</small>
+        </div>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>

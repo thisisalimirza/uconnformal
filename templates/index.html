@@ -8,36 +8,41 @@
         <!-- Hero Section -->
         <div class="card mb-4">
             <div class="card-body text-center py-5">
-                <h1 class="display-4 mb-3 fw-bold">Medical School Formal 2024</h1>
-                <p class="lead mb-4">Join us for an unforgettable evening of celebration, dancing, and memories!</p>
+                <div class="mb-4">
+                    <img src="https://health.uconn.edu/wp-content/uploads/2017/09/uconn-health-wordmark-stacked.png" 
+                         alt="UConn Health Logo" 
+                         style="max-width: 200px; margin-bottom: 2rem;">
+                </div>
+                <h1 class="display-4 mb-3 fw-bold text-primary">Medical School Formal 2024</h1>
+                <p class="lead mb-4 text-secondary">Join your fellow medical students for an unforgettable evening of celebration!</p>
                 
                 <div class="row justify-content-center">
                     <div class="col-md-8">
-                        <div class="p-4 bg-light rounded-4 mb-4">
+                        <div class="p-4 bg-light rounded-4 mb-4 uconn-accent-border">
                             <div class="row text-start g-4">
                                 <div class="col-md-4">
                                     <div class="d-flex align-items-center">
-                                        <i class="fas fa-calendar-alt fa-2x text-primary me-3"></i>
+                                        <i class="fas fa-calendar-alt fa-2x text-accent me-3"></i>
                                         <div>
-                                            <h6 class="mb-1">Date</h6>
+                                            <h6 class="mb-1 text-primary">Date</h6>
                                             <p class="mb-0">TBD</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="d-flex align-items-center">
-                                        <i class="fas fa-clock fa-2x text-primary me-3"></i>
+                                        <i class="fas fa-clock fa-2x text-accent me-3"></i>
                                         <div>
-                                            <h6 class="mb-1">Time</h6>
+                                            <h6 class="mb-1 text-primary">Time</h6>
                                             <p class="mb-0">TBD</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="d-flex align-items-center">
-                                        <i class="fas fa-map-marker-alt fa-2x text-primary me-3"></i>
+                                        <i class="fas fa-map-marker-alt fa-2x text-accent me-3"></i>
                                         <div>
-                                            <h6 class="mb-1">Location</h6>
+                                            <h6 class="mb-1 text-primary">Location</h6>
                                             <p class="mb-0">TBD</p>
                                         </div>
                                     </div>
@@ -72,7 +77,7 @@
                 <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
                     {% if current_user.is_authenticated %}
                         {% if not current_user.registration %}
-                            <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg px-5 gap-3">
+                            <a href="{{ url_for('register') }}" class="btn btn-accent btn-lg px-5 gap-3">
                                 <i class="fas fa-ticket-alt me-2"></i>Register Now
                             </a>
                         {% else %}
@@ -81,7 +86,7 @@
                             </a>
                         {% endif %}
                     {% else %}
-                        <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg px-5 mb-2 mb-sm-0">
+                        <a href="{{ url_for('login') }}" class="btn btn-accent btn-lg px-5 mb-2 mb-sm-0">
                             <i class="fas fa-sign-in-alt me-2"></i>Login to Register
                         </a>
                         <a href="{{ url_for('signup') }}" class="btn btn-outline-primary btn-lg px-5">
@@ -93,15 +98,16 @@
         </div>
 
         <!-- Features Section -->
+        <h2 class="uconn-section-title mb-4">Event Highlights</h2>
         <div class="row g-4">
             <div class="col-md-4">
                 <div class="card h-100">
                     <div class="card-body text-center p-4">
                         <div class="feature-icon mb-3">
-                            <i class="fas fa-glass-cheers fa-3x text-primary"></i>
+                            <i class="fas fa-glass-cheers fa-3x text-accent"></i>
                         </div>
-                        <h5 class="card-title">Elegant Evening</h5>
-                        <p class="card-text text-muted">Join your colleagues for a night of sophistication and celebration.</p>
+                        <h5 class="card-title text-primary">Elegant Evening</h5>
+                        <p class="card-text text-secondary">Join your colleagues for a night of sophistication and celebration.</p>
                     </div>
                 </div>
             </div>
@@ -109,10 +115,10 @@
                 <div class="card h-100">
                     <div class="card-body text-center p-4">
                         <div class="feature-icon mb-3">
-                            <i class="fas fa-music fa-3x text-primary"></i>
+                            <i class="fas fa-music fa-3x text-accent"></i>
                         </div>
-                        <h5 class="card-title">Live Entertainment</h5>
-                        <p class="card-text text-muted">Dance the night away with great music and entertainment.</p>
+                        <h5 class="card-title text-primary">Live Entertainment</h5>
+                        <p class="card-text text-secondary">Dance the night away with great music and entertainment.</p>
                     </div>
                 </div>
             </div>
@@ -120,10 +126,10 @@
                 <div class="card h-100">
                     <div class="card-body text-center p-4">
                         <div class="feature-icon mb-3">
-                            <i class="fas fa-camera fa-3x text-primary"></i>
+                            <i class="fas fa-camera fa-3x text-accent"></i>
                         </div>
-                        <h5 class="card-title">Photo Opportunities</h5>
-                        <p class="card-text text-muted">Capture memories with friends at our professional photo stations.</p>
+                        <h5 class="card-title text-primary">Photo Opportunities</h5>
+                        <p class="card-text text-secondary">Capture memories with friends at our professional photo stations.</p>
                     </div>
                 </div>
             </div>
@@ -144,14 +150,28 @@
 }
 
 .rounded-4 {
-    border-radius: 1rem;
+    border-radius: 0.5rem;
 }
 
 .display-4 {
-    background: linear-gradient(120deg, var(--primary-color), var(--secondary-color));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--primary-color);
+    position: relative;
+    display: inline-block;
+}
+
+.display-4::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background-color: var(--accent-color);
+}
+
+.text-accent {
+    color: var(--accent-color) !important;
 }
 
 @media (max-width: 768px) {

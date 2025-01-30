@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4">Your Registration Status</h2>
+                
+                {% if current_user.registration %}
+                    <div class="text-center mb-4">
+                        <h4>Hello, {{ current_user.name }}!</h4>
+                        {% if current_user.registration.status == 'registered' %}
+                            <div class="alert alert-success mt-3">
+                                <h5 class="alert-heading">You're Registered! 🎉</h5>
+                                <p>Your spot for the formal has been confirmed.</p>
+                            </div>
+                            
+                            <!-- Payment Status -->
+                            <div class="alert {% if current_user.registration.payment_confirmed %}alert-success{% else %}alert-warning{% endif %} mt-3">
+                                <h5 class="alert-heading">Payment Status</h5>
+                                {% if current_user.registration.payment_confirmed %}
+                                    <p>Payment Verified ✓</p>
+                                {% else %}
+                                    <p>Payment Pending Verification</p>
+                                    <hr>
+                                    <p class="mb-0">
+                                        Please ensure you've sent ${{ current_user.registration.payment_amount }} to @rileycable on Venmo
+                                    </p>
+                                {% endif %}
+                            </div>
+                        {% else %}
+                            <div class="alert alert-warning mt-3">
+                                <h5 class="alert-heading">You're on the Waitlist</h5>
+                                <p>Your current position: #{{ current_user.registration.waitlist_position }}</p>
+                                <p>We'll notify you if a spot becomes available.</p>
+                                <small>Note: Payment will only be required if a spot becomes available.</small>
+                            </div>
+                        {% endif %}
+
+                        <div class="mt-4">
+                            <h5>Registration Details</h5>
+                            <p><strong>Registration Date:</strong> {{ current_user.registration.registration_date.strftime('%B %d, %Y') }}</p>
+                            {% if current_user.registration.plus_one_name %}
+                                <p><strong>Plus One:</strong> {{ current_user.registration.plus_one_name }}</p>
+                                <p><strong>Total Amount:</strong> ${{ current_user.registration.payment_amount }} ($15 + $50 for plus one)</p>
+                            {% else %}
+                                <p><em>No plus one registered</em></p>
+                                <p><strong>Total Amount:</strong> ${{ current_user.registration.payment_amount }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="text-center">
+                        <p class="lead">You haven't registered for the formal yet.</p>
+                        <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg mt-3">Register Now</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

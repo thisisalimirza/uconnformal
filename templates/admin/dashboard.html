@@ -1,0 +1,146 @@
+{% extends "admin/base.html" %}
+
+{% block admin_content %}
+<h2>Admin Dashboard</h2>
+
+<!-- Statistics Cards -->
+<div class="row mt-4">
+    <div class="col-md-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <h5 class="card-title">Total Registrations</h5>
+                <h2 class="card-text">{{ total_registrations }}</h2>
+                <p class="mb-0">out of {{ MAX_CAPACITY }} spots</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card {% if available_spots > 0 %}bg-success{% else %}bg-danger{% endif %} text-white">
+            <div class="card-body">
+                <h5 class="card-title">Available Spots</h5>
+                <h2 class="card-text">{{ available_spots }}</h2>
+                <p class="mb-0">spots remaining</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-warning text-dark">
+            <div class="card-body">
+                <h5 class="card-title">Waitlist</h5>
+                <h2 class="card-text">{{ waitlist_count }}</h2>
+                <p class="mb-0">people waiting</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <h5 class="card-title">Pending Payments</h5>
+                <h2 class="card-text">{{ pending_payments }}</h2>
+                <p class="mb-0">need verification</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Activity -->
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Recent Registrations</h5>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Plus One</th>
+                                <th>Payment</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for reg in recent_registrations %}
+                            <tr>
+                                <td>{{ reg.user.name }}</td>
+                                <td>
+                                    {% if reg.plus_one_name %}
+                                        {{ reg.plus_one_name }}
+                                    {% else %}
+                                        <span class="text-muted">None</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <span class="badge {% if reg.payment_confirmed %}bg-success{% else %}bg-warning{% endif %}">
+                                        {% if reg.payment_confirmed %}
+                                            Verified (${{ reg.payment_amount }})
+                                        {% else %}
+                                            Pending (${{ reg.payment_amount }})
+                                        {% endif %}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="badge {% if reg.status == 'registered' %}bg-success{% else %}bg-warning{% endif %}">
+                                        {{ reg.status }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <form action="{{ url_for('toggle_payment_verification', registration_id=reg.id) }}" 
+                                          method="POST" 
+                                          style="display: inline;">
+                                        <button type="submit" class="btn btn-sm {% if reg.payment_confirmed %}btn-success{% else %}btn-warning{% endif %}">
+                                            {% if reg.payment_confirmed %}
+                                                ✓ Verified
+                                            {% else %}
+                                                Verify
+                                            {% endif %}
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Current Waitlist</h5>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Position</th>
+                                <th>Name</th>
+                                <th>Plus One</th>
+                                <th>Date Added</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for reg in waitlist %}
+                            <tr>
+                                <td>#{{ reg.waitlist_position }}</td>
+                                <td>{{ reg.user.name }}</td>
+                                <td>
+                                    {% if reg.plus_one_name %}
+                                        {{ reg.plus_one_name }}
+                                    {% else %}
+                                        <span class="text-muted">None</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ reg.registration_date.strftime('%Y-%m-%d %H:%M') }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

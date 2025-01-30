@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <!-- Hero Section -->
+        <div class="card mb-4">
+            <div class="card-body text-center py-5">
+                <h1 class="display-4 mb-3 fw-bold">Medical School Formal 2024</h1>
+                <p class="lead mb-4">Join us for an unforgettable evening of celebration, dancing, and memories!</p>
+                
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="p-4 bg-light rounded-4 mb-4">
+                            <div class="row text-start g-4">
+                                <div class="col-md-4">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-calendar-alt fa-2x text-primary me-3"></i>
+                                        <div>
+                                            <h6 class="mb-1">Date</h6>
+                                            <p class="mb-0">TBD</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-clock fa-2x text-primary me-3"></i>
+                                        <div>
+                                            <h6 class="mb-1">Time</h6>
+                                            <p class="mb-0">TBD</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-map-marker-alt fa-2x text-primary me-3"></i>
+                                        <div>
+                                            <h6 class="mb-1">Location</h6>
+                                            <p class="mb-0">TBD</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% if available_spots > 0 %}
+                    <div class="alert alert-success d-inline-block mb-4">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-ticket-alt fa-2x me-3"></i>
+                            <div class="text-start">
+                                <h5 class="alert-heading mb-1">Spots Available: {{ available_spots }}</h5>
+                                <p class="mb-0">Register now to secure your place!</p>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="alert alert-warning d-inline-block mb-4">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-hourglass-half fa-2x me-3"></i>
+                            <div class="text-start">
+                                <h5 class="alert-heading mb-1">Event is Currently Full</h5>
+                                <p class="mb-0">You can still register to join the waitlist.</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                    {% if current_user.is_authenticated %}
+                        {% if not current_user.registration %}
+                            <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg px-5 gap-3">
+                                <i class="fas fa-ticket-alt me-2"></i>Register Now
+                            </a>
+                        {% else %}
+                            <a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-lg px-5 gap-3">
+                                <i class="fas fa-columns me-2"></i>View Your Registration
+                            </a>
+                        {% endif %}
+                    {% else %}
+                        <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg px-5 mb-2 mb-sm-0">
+                            <i class="fas fa-sign-in-alt me-2"></i>Login to Register
+                        </a>
+                        <a href="{{ url_for('signup') }}" class="btn btn-outline-primary btn-lg px-5">
+                            <i class="fas fa-user-plus me-2"></i>Sign Up
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-glass-cheers fa-3x text-primary"></i>
+                        </div>
+                        <h5 class="card-title">Elegant Evening</h5>
+                        <p class="card-text text-muted">Join your colleagues for a night of sophistication and celebration.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-music fa-3x text-primary"></i>
+                        </div>
+                        <h5 class="card-title">Live Entertainment</h5>
+                        <p class="card-text text-muted">Dance the night away with great music and entertainment.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-camera fa-3x text-primary"></i>
+                        </div>
+                        <h5 class="card-title">Photo Opportunities</h5>
+                        <p class="card-text text-muted">Capture memories with friends at our professional photo stations.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.feature-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: var(--background-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.rounded-4 {
+    border-radius: 1rem;
+}
+
+.display-4 {
+    background: linear-gradient(120deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+@media (max-width: 768px) {
+    .display-4 {
+        font-size: 2.5rem;
+    }
+}
+</style>
+{% endblock %} 

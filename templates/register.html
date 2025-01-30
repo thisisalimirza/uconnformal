@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4">Event Registration</h2>
+
+                <!-- Payment Information Card -->
+                <div class="alert alert-info mb-4">
+                    <h5 class="alert-heading">Payment Information</h5>
+                    <p class="mb-2">Please send payment to: <strong>@rileycable</strong> on Venmo</p>
+                    <ul class="mb-0">
+                        <li>Student Registration: <strong>$15</strong></li>
+                        <li>Plus One Guest: Additional <strong>$50</strong></li>
+                    </ul>
+                    <hr>
+                    <p class="mb-0"><small>Your registration will be confirmed after payment is verified.</small></p>
+                </div>
+                
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Your Name</label>
+                        <input type="text" class="form-control" id="name" value="{{ current_user.name }}" disabled>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Your Email</label>
+                        <input type="email" class="form-control" id="email" value="{{ current_user.email }}" disabled>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="bringing_plus_one" name="bringing_plus_one" onchange="togglePlusOne(); updateTotalAmount();">
+                            <label class="form-check-label" for="bringing_plus_one">
+                                I would like to bring a plus-one (+$50)
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="plus_one_section" style="display: none;" class="mb-4">
+                        <div class="mb-3">
+                            <label for="plus_one_name" class="form-label">Plus One's Name</label>
+                            <input type="text" class="form-control" id="plus_one_name" name="plus_one_name">
+                        </div>
+                    </div>
+
+                    <div class="alert alert-primary mb-4">
+                        <strong>Total Amount Due: $<span id="total_amount">15</span></strong>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="payment_confirmation" name="payment_confirmation" required>
+                            <label class="form-check-label" for="payment_confirmation">
+                                I confirm that I have sent the payment to @rileycable on Venmo
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">Complete Registration</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function togglePlusOne() {
+    const plusOneSection = document.getElementById('plus_one_section');
+    const checkbox = document.getElementById('bringing_plus_one');
+    plusOneSection.style.display = checkbox.checked ? 'block' : 'none';
+}
+
+function updateTotalAmount() {
+    const baseAmount = 15;
+    const plusOneAmount = 50;
+    const hasPlusOne = document.getElementById('bringing_plus_one').checked;
+    const totalAmount = baseAmount + (hasPlusOne ? plusOneAmount : 0);
+    document.getElementById('total_amount').textContent = totalAmount;
+}
+</script>
+{% endblock %} 

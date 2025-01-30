@@ -1,0 +1,126 @@
+{% extends "admin/base.html" %}
+
+{% block admin_content %}
+<div class="d-flex justify-content-between align-items-center">
+    <h2>All Registrations</h2>
+    <div class="btn-group">
+        <button class="btn btn-outline-secondary" onclick="window.print()">Print List</button>
+    </div>
+</div>
+
+<div class="card mt-4">
+    <div class="card-body">
+        <!-- Payment Summary -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card bg-success text-white">
+                    <div class="card-body">
+                        <h6 class="card-title">Verified Payments</h6>
+                        <h3 class="mb-0">${{ total_verified_amount }}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-warning">
+                    <div class="card-body">
+                        <h6 class="card-title">Pending Payments</h6>
+                        <h3 class="mb-0">${{ total_pending_amount }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Status</th>
+                        <th>Plus One</th>
+                        <th>Payment Status</th>
+                        <th>Amount</th>
+                        <th>Registration Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for reg in registrations %}
+                    <tr>
+                        <td>{{ reg.user.name }}</td>
+                        <td>{{ reg.user.email }}</td>
+                        <td>
+                            <span class="badge {% if reg.status == 'registered' %}bg-success{% else %}bg-warning{% endif %}">
+                                {{ reg.status }}
+                                {% if reg.waitlist_position %}
+                                    #{{ reg.waitlist_position }}
+                                {% endif %}
+                            </span>
+                        </td>
+                        <td>
+                            {% if reg.plus_one_name %}
+                                {{ reg.plus_one_name }}
+                                <span class="badge bg-info">+$50</span>
+                            {% else %}
+                                <span class="text-muted">None</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <span class="badge {% if reg.payment_confirmed %}bg-success{% else %}bg-warning{% endif %}">
+                                {% if reg.payment_confirmed %}
+                                    Verified
+                                {% else %}
+                                    Pending
+                                {% endif %}
+                            </span>
+                        </td>
+                        <td>${{ reg.payment_amount }}</td>
+                        <td>{{ reg.registration_date.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <td>
+                            <div class="btn-group">
+                                <form action="{{ url_for('toggle_payment_verification', registration_id=reg.id) }}" 
+                                      method="POST" 
+                                      style="display: inline;">
+                                    <button type="submit" 
+                                            class="btn btn-sm {% if reg.payment_confirmed %}btn-success{% else %}btn-warning{% endif %} me-1"
+                                            {% if reg.status == 'waitlisted' %}disabled{% endif %}
+                                            title="{% if reg.status == 'waitlisted' %}Payment verification not needed for waitlisted registrations{% endif %}">
+                                        {% if reg.payment_confirmed %}
+                                            ✓ Verified
+                                        {% else %}
+                                            Verify Payment
+                                        {% endif %}
+                                    </button>
+                                </form>
+                                <form action="{{ url_for('remove_registration', registration_id=reg.id) }}" 
+                                      method="POST" 
+                                      onsubmit="return confirm('Are you sure you want to remove this registration?');"
+                                      style="display: inline;">
+                                    <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+@media print {
+    .sidebar, .btn-group, .actions, form, .navbar {
+        display: none !important;
+    }
+    .card {
+        border: none !important;
+    }
+    .badge {
+        border: 1px solid #000 !important;
+        color: #000 !important;
+        background: none !important;
+    }
+}
+</style>
+{% endblock %} 
